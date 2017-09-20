@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">AndroidApplication</string>
+    <string name="app_name">Career Center</string>
     <string name="log_on">Log On</string>
     <string name="sign_up">Sign Up</string>
     <string name="sheridan_logo">Sheridan Logo</string>
+    <string name="password">Password</string>
+    <string name="user_name">User Name</string>
 </resources>
