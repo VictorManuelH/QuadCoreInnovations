@@ -22,5 +22,6 @@ public class dashboard extends AppCompatActivity {
 
     public void Events(View view) {
         Intent intent = new Intent(dashboard.this, eventPage.class);
+        startActivity(intent);
     }
 }
