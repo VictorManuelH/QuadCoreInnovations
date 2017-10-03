@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,7 +41,7 @@ import quadcore.androidapplication.models.EventModel;
  */
 
 public class eventPage extends AppCompatActivity {
-
+    TextView mText;
     ListView eventList;
 
 
@@ -48,7 +49,7 @@ public class eventPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventpage);
-
+        mText = (TextView)findViewById(R.id.text);
         eventList = (ListView) findViewById(R.id.eventList);
 
         new JSONTask().execute("http://capstoneprototypeqci.azurewebsites.net/api/EventsAPI");
@@ -80,29 +81,26 @@ public class eventPage extends AppCompatActivity {
 
                 String finalJSON = stringBuffer.toString();
 
-                JSONObject jsonObject = new JSONObject(finalJSON);
-
-                JSONArray jsonArray = jsonObject.getJSONArray("");
+                JSONArray jsonArray = new JSONArray(finalJSON);
 
                 List<EventModel> eventModelList = new ArrayList<>();
 
-                for (int s = 0; s < jsonArray.length(); s++) {
-                    EventModel model = new EventModel();
-                JSONObject finalObject = jsonArray.getJSONObject(s);
-                    model.setEvent(finalObject.getString("Description"));
-                    model.setLocation(finalObject.getString("Location"));
-                    model.setName(finalObject.getString("Name"));
-                    model.setTime(finalObject.getString("Time"));
+                for (int i =0; i<jsonArray.length(); i++){
+                    EventModel eventModel = new EventModel();
+                    JSONObject finalObject = jsonArray.getJSONObject(i);
+                    eventModel.setTime(finalObject.getString("Time"));
+                    eventModel.setName(finalObject.getString("Name"));
+                    eventModel.setEvent(finalObject.getString("Description"));
+                    eventModel.setLocation(finalObject.getString("Location"));
 
-
-
-                   eventModelList.add(model);
-            }
+                    eventModelList.add(eventModel);
+                }
                 return eventModelList;
                } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
@@ -122,17 +120,17 @@ return null;
         protected void onPostExecute(List<EventModel> result) {
             super.onPostExecute(result);
 
-
-            EventAdapter adapter = new EventAdapter(getApplicationContext(),R.layout.row,result);
+            EventAdapter adapter = new EventAdapter(getApplicationContext(), R.layout.row, result);
             eventList.setAdapter(adapter);
-
         }
     }
 
     public class EventAdapter extends ArrayAdapter{
+
          public List<EventModel> mEventModelList;
          public int resource;
         private LayoutInflater mInflater;
+
         public EventAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<EventModel> objects) {
             super(context, resource, objects);
             mEventModelList = objects;
@@ -145,7 +143,7 @@ return null;
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
             if (convertView == null){
-                convertView = mInflater.inflate(R.layout.row, null);
+                convertView = mInflater.inflate(resource, null);
             }
 
             ImageView imageView;
@@ -158,9 +156,9 @@ return null;
             eventDescription = (TextView)convertView.findViewById(R.id.eventDescription);
 
             eventName.setText(mEventModelList.get(position).getName());
-            eventTime.setText(mEventModelList.get(position).getTime());
-            eventLocation.setText(mEventModelList.get(position).getLocation());
-            eventDescription.setText(mEventModelList.get(position).getEvent());
+            eventTime.setText("Date and Time: "+ mEventModelList.get(position).getTime());
+            eventLocation.setText("Location: "+ mEventModelList.get(position).getLocation());
+            eventDescription.setText("Description: "+ mEventModelList.get(position).getEvent());
 
             return convertView;
         }
