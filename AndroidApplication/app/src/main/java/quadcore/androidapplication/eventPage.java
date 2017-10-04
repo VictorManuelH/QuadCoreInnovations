@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -36,6 +37,8 @@ import java.util.List;
 
 import quadcore.androidapplication.models.EventModel;
 
+import static android.view.View.VISIBLE;
+
 /**
  * Created by victor on 9/19/2017.
  */
@@ -43,6 +46,7 @@ import quadcore.androidapplication.models.EventModel;
 public class eventPage extends AppCompatActivity {
     TextView mText;
     ListView eventList;
+    ProgressBar mProgressBar;
 
 
     @Override
@@ -51,15 +55,18 @@ public class eventPage extends AppCompatActivity {
         setContentView(R.layout.eventpage);
         mText = (TextView)findViewById(R.id.text);
         eventList = (ListView) findViewById(R.id.eventList);
-
+        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(VISIBLE);
         new JSONTask().execute("http://capstoneprototypeqci.azurewebsites.net/api/EventsAPI");
-      //  new JSONTask().execute("https://jsonparsingdemo-cec5b.firebaseapp.com/jsonData/moviesDemoList.txt");
+
+        //  new JSONTask().execute("https://jsonparsingdemo-cec5b.firebaseapp.com/jsonData/moviesDemoList.txt");
     }
 
    public  class JSONTask extends AsyncTask<String, String, List<EventModel>>{
 
         @Override
         protected List<EventModel> doInBackground(String... params) {
+
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             try {
@@ -95,6 +102,7 @@ public class eventPage extends AppCompatActivity {
 
                     eventModelList.add(eventModel);
                 }
+
                 return eventModelList;
                } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -119,7 +127,7 @@ return null;
         @Override
         protected void onPostExecute(List<EventModel> result) {
             super.onPostExecute(result);
-
+            mProgressBar.setVisibility(View.GONE);
             EventAdapter adapter = new EventAdapter(getApplicationContext(), R.layout.row, result);
             eventList.setAdapter(adapter);
         }
