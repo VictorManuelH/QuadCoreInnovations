@@ -8,12 +8,23 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="48dp"
+        android:layout_width="112dp"
+        android:layout_height="107dp"
+        android:layout_marginLeft="27dp"
         android:layout_marginTop="28dp"
         android:onClick="Events"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_agenda"/>
+        app:srcCompat="@drawable/events"/>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="106dp"
+        android:layout_height="107dp"
+        android:onClick="mockInterview"
+        app:srcCompat="@drawable/interviewicon"
+        app:layout_constraintLeft_toRightOf="@+id/imageButton"
+        android:layout_marginLeft="11dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="28dp"/>
 </android.support.constraint.ConstraintLayout>

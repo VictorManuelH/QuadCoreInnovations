@@ -10,7 +10,7 @@ import android.view.View;
  */
 
 public class dashboard extends AppCompatActivity {
-
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +21,12 @@ public class dashboard extends AppCompatActivity {
     }
 
     public void Events(View view) {
-        Intent intent = new Intent(dashboard.this, eventPage.class);
+        intent = new Intent(dashboard.this, eventPage.class);
+        startActivity(intent);
+    }
+
+    public void mockInterview(View view) {
+        intent = new Intent(dashboard.this, mockinterview.class);
         startActivity(intent);
     }
 }
