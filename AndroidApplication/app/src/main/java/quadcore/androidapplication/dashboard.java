@@ -10,23 +10,20 @@ import android.view.View;
  */
 
 public class dashboard extends AppCompatActivity {
-    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-
-
-
-    }
+}
 
     public void Events(View view) {
-        intent = new Intent(dashboard.this, eventPage.class);
-        startActivity(intent);
+       Intent eventIntent = new Intent(dashboard.this, eventPage.class);
+        startActivity(eventIntent);
     }
 
     public void mockInterview(View view) {
-        intent = new Intent(dashboard.this, mockinterview.class);
-        startActivity(intent);
+        Intent interviewIntent = new Intent(dashboard.this, mockInterview.class);
+        startActivity(interviewIntent);
     }
 }
